@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethan - Kerbonaut</title>
     <meta name="description" content="KSP or be KSP'd">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -42,44 +45,69 @@
         I love projects that require both hardware and software.
     </p>
     <ul class="tags">
-        <li>Onshape</li>
-        <li>KiCad</li>
-        <li>Python</li>
+        <li>Onshape <span class="val">14/14</span></li>
+        <li>KiCad <span class="val">14/14</span></li>
+        <li>Python <span class="val">14/14</span></li>
     </ul>
 </section>
 
 <section id="projects" class="container section">
-    <h2>Projects</h2>
-    <div class="cards">
+    <h2>Continue Saved Game</h2>
 
-        <article class="card">
-            <h3>Crux</h3>
-            <p>This is Crux, my 1lb lifting plastic combat robot
-                I really enjoyed this project becuase it was my first solid bot.
-                When my buddy and i battled I had him controlled the whole time.
-                One note though, i would never make a lifter again.
-                Their great for control but i like watching bots get obliterated.
-            </p>
-        </article>
+    <input type="search" id="project-filter" class="dialog-search"
+        placeholder="Enter search..." aria-label="Filter projects">
 
-        <article class="card">
-            <h3>Hank</h3>
-            <p>Hank the tank is a work in progress and will soon be retrofitted with a rpi camera.
-                I made hank to drive under my house, theres an acsess hole and my cats are always in it?
-                who knows what could be down there?
-                Kerbal Society... is that you?
-            </p>
-        </article>
+        <ul class="save-list">
+            <li class="save-row">
+                <details>
+                    <summary>
+                        <img class="save-icon" src="img/crux.jpg" alt="">
+                        <span class="save-text">
+                            <span class="save-name">Crux</span>
+                            <span class="save-status">one flight in progress</span>
+                            <span class="save-date">Year 0, Day 135 &mdash; 1lb lifter</span>
+                        </span>
+                    </summary>
+                    <p>My first solid bot &mdash; a 1lb plstic lifter.
+                        I had my buddy controlled the whole match. Great for control,
+                        but I dont think I would ever make a lifter again.
+                        I like watching bots get obliterated.</p>
+                </details>
+            </li>
 
-        <article class="card">
-            <h3>Aerobars</h3>
-            <p>Did you know that 40% of cyclists aerodynamic drag comes from their body position?
-                Pretty rough. Bless whoever invented aerobars.
-                Darn though their expensive.
-                So I made my own then rode a 100mi race with them.
-            </p>
-        </article>
-    </div>
+            <li class="save-row">
+                <details>
+                    <summary>
+                        <img class="save-icon" src="img.jpg" alt="">
+                        <span class="save-text">
+                            <span class="save-name">Hank</span>
+                            <span class="save-status">one flight in progress</span>
+                            <span class="save-date">Year 0, Day, 38 &mdash; Mini Treaded ROV</span>
+                        </span>
+                    </summary>
+                    <p>Hank the tank is a work in progress.
+                        I had never made a treaded robot before, but i see why people do.
+                        I saw my cats run beneath our house through a hole,
+                        and figured if i cant see what im going drive through, treads would be reliable.
+                        Soon Hank will be retrofitted with a rpi camera and start his mission.
+                    </p>
+                </details>
+            </li>
+
+            <li class="save-row">
+                <details>
+                    <summary>
+                        <img class="save-icon" src="img/crux.jpg" alt="">
+                        <span class="save-text">
+                            <span class="save-name">
+                        </span>
+            </li>
+        </ul>
+
+        <div classs="dialog-sctions">
+            <a class="btn btn-danger" href="#KSP">Abort</a>
+            <a class="btn btn-primary" href="https://github.com/EthanKerman">Load</a>
+        </div>
 </section>
 
 <section id="KSP" class="container section">
@@ -91,6 +119,24 @@
 
 </main>
 
+<footer class="site-footer">
+    <div class="container">
+        <p>Built by Ethan; <a href="https://github.com/EthanKerman">source</a>
+        <p class="version">1.0.0 (WebPlayer) en-us</p>
+    </div>
+</footer>
+
 </body>
+
+<script>
+    const filter = document.getElementById('project-filter');
+    const rows = document.querySelectorAll('.save-row');
+    filter.addEventListener('input', () => {
+        const q = filter.value.trim().toLowerCase();
+        rows.forEach(row => {
+            row.hidden = !row.textContent.toLowerCase().includes(q)
+        })
+    })
+</script>
 
 </html>

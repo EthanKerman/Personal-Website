@@ -17,7 +17,7 @@
             <span class="wordmark">Ethan</span>
             <nav>
                 <a href="#about">About</a>
-                <a href="#projects">projects</a>
+                <a href="#projects">Projects</a>
                 <a href="#KSP">KSP</a>
             </nav>
         </div>
@@ -25,22 +25,35 @@
 
 <main>
 
-    <section class="hero">
-        <div class="container">
-            <h1>EthanKerman</h1>
+    <section class="hero" id="top">
+        <div class="container hero-inner">
+            <h1 class="menu-title">EthanKerman</h1>
+
+            <nav class="main-menu" aria-label="Main">
+                <ul>
+                    <li><a href="#projects"><span>Resume Saved</span></a></li>
+                    <li><a href="#about"><span>Start New</span></a></li>
+                    <li><a href="#about"><span>Training</span></a></li>
+                    <li><a href="#KSP"><span>Play Missions</span></a></li>
+                    <li><a herf="https://github.com/EthanKerman"><span>Quit to Desktop</span></a></li>
+                </ul>
+            </nav>
+
             <p class="lede">
-                I enjoy makeing many things... and sometimes watching them blow up?
-                Hence KSP and combat robotics
+                I enjoy making many things... and sometimes watching them blow up
             </p>
+
+            <p class="hero-version">1.12.3 (WebPlayer) en-us</p>
         </div>
     </section>
+
 
     <section id="about" class="container section">
         <h2>About</h2>
         <p>
-        Right now I have a few diffrent projects that i split my time,
+        Right now I have a few difrent projects that i split my time,
         Im working on Pizza, my 1.25 LB plastic shuffling shell spinner combat robot.
-        Why not get the extra weight bonous of a shuffler when your whole body is a weapon?
+        Why not get the extra weight bonus of a shuffler when your whole body is a weapon?
         Not only am i working on combat robotics but also an open source flight stick.
         I love projects that require both hardware and software.
     </p>
@@ -68,9 +81,9 @@
                             <span class="save-date">Year 0, Day 135 &mdash; 1lb lifter</span>
                         </span>
                     </summary>
-                    <p>My first solid bot &mdash; a 1lb plstic lifter.
+                    <p>My first solid bot &mdash; a 1lb plastic lifter.
                         I had my buddy controlled the whole match. Great for control,
-                        but I dont think I would ever make a lifter again.
+                        but I don't think I would ever make a lifter again.
                         I like watching bots get obliterated.</p>
                 </details>
             </li>
@@ -78,17 +91,17 @@
             <li class="save-row">
                 <details>
                     <summary>
-                        <img class="save-icon" src="img.jpg" alt="">
+                        <img class="save-icon" src="img/hank.jpg" alt="">
                         <span class="save-text">
                             <span class="save-name">Hank</span>
                             <span class="save-status">one flight in progress</span>
-                            <span class="save-date">Year 0, Day, 38 &mdash; Mini Treaded ROV</span>
+                            <span class="save-date">Year 0, Day 38 &mdash; Mini Treaded ROV</span>
                         </span>
                     </summary>
                     <p>Hank the tank is a work in progress.
                         I had never made a treaded robot before, but i see why people do.
                         I saw my cats run beneath our house through a hole,
-                        and figured if i cant see what im going drive through, treads would be reliable.
+                        and figured if i cant see what i'm going drive through, treads would be reliable.
                         Soon Hank will be retrofitted with a rpi camera and start his mission.
                     </p>
                 </details>
@@ -104,7 +117,7 @@
             </li>
         </ul>
 
-        <div classs="dialog-sctions">
+        <div class="dialog-sctions">
             <a class="btn btn-danger" href="#KSP">Abort</a>
             <a class="btn btn-primary" href="https://github.com/EthanKerman">Load</a>
         </div>
@@ -121,12 +134,10 @@
 
 <footer class="site-footer">
     <div class="container">
-        <p>Built by Ethan; <a href="https://github.com/EthanKerman">source</a>
+        <p>Built by Ethan; <a href="https://github.com/EthanKerman">source</a></p>
         <p class="version">1.0.0 (WebPlayer) en-us</p>
     </div>
 </footer>
-
-</body>
 
 <script>
     const filter = document.getElementById('project-filter');
@@ -137,6 +148,20 @@
             row.hidden = !row.textContent.toLowerCase().includes(q)
         })
     })
+
+    const heroEl = document.querySelector('.hero');
+    const headerEl = document.querySelector('.site-header');
+
+    if (heroEl && headerEl && 'IntersectionObserver' in window) {
+        headerEl.classList.add('js-autohide');
+        new IntersectionObserver(
+            ([entry]) => headerEl.classList.toggle('is-visible', !entry.isIntersecting),
+            { threshold: 0, rootMargin: '-25% 0px 0px 0px' }
+
+        ).observe(heroEl);
+    }
 </script>
+
+</body>
 
 </html>

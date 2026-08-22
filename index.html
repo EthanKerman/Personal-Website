@@ -14,14 +14,35 @@
 
     <header class="site-header">
         <div class="container header-inner">
-            <span class="wordmark">Ethan</span>
+            <div class="hud-left">
+                <span class="wordmmark">Ethan</span>
+                <span class="met" aria-hidden="true">
+                    <span class="met-value" id="met-value">T+ 0d, 00:00:00</span>
+                    <span class="met-label">MET</span>
+                </span>
+            </div>
+
+            <div class="altimiter" aria-hidden="true">
+                <span class="alt-digits" id="alt-digits"></span>
+                <span class="alt-unit">m</span>
+            </div>
+
             <nav>
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
-                <a href="#KSP">KSP</a>
+                <a href="#ksp">KSP</a>
             </nav>
         </div>
     </header>
+
+    <nav class="stage-stack" aria-label="Section">
+        <ol>
+            <li><a href="#top"><span class="stage-num">1</span><span class="stage-label">Menu</span></a></li>
+            <li><a href="#about"><span class="stage-num">2</span><span class="stage-label">About</span></a></li>
+            <li><a href="#projects"><span class="stage-num">3</span><span class="stage-label">Saves</span></a></li>
+            <li><a href="#ksp"><span class="stage-num">4</span><span class="stage-label">KSP</span></a></li>
+        </ol>
+    </nav>
 
 <main>
 
@@ -34,8 +55,8 @@
                     <li><a href="#projects"><span>Resume Saved</span></a></li>
                     <li><a href="#about"><span>Start New</span></a></li>
                     <li><a href="#about"><span>Training</span></a></li>
-                    <li><a href="#KSP"><span>Play Missions</span></a></li>
-                    <li><a herf="https://github.com/EthanKerman"><span>Quit to Desktop</span></a></li>
+                    <li><a href="#ksp"><span>Play Missions</span></a></li>
+                    <li><a href="https://github.com/EthanKerman"><span>Quit to Desktop</span></a></li>
                 </ul>
             </nav>
 
@@ -57,12 +78,40 @@
         Not only am i working on combat robotics but also an open source flight stick.
         I love projects that require both hardware and software.
     </p>
-    <ul class="tags">
-        <li>Onshape <span class="val">14/14</span></li>
-        <li>KiCad <span class="val">14/14</span></li>
-        <li>Python <span class="val">14/14</span></li>
-    </ul>
-</section>
+        <div class="resources" aria-label="Skills">
+            <h3 class="resources-title">Resources</h3>
+
+            <ul class="resource-list">
+                <li class="resource" style="--fill: 88%">
+                    <span class="res-box" aria-hidden="true"></span>
+                    <span class="res-name">Onshape</span>
+                    <span class="res-bar"><span class="res-fill"></span></span>
+                    <span class="res-val">88 / 100</span>
+                </li>
+
+                <li class="resource" style="--fill: 64%">
+                    <span class="res-box" aria-hidden="true"></span>
+                    <span class="res-name">Python</span>
+                    <span class="res-bar"><span class="res-fill"></span></span>
+                    <span class="res-val">64 / 100</span>
+                </li>
+
+                <li class="resource" style="--fill: 45%">
+                    <span class="res-box" aria-hidden="true"></span>
+                    <span class="res-name">KiCad</span>
+                    <span class="res-bar"><span class="res-fill"></span></span>
+                    <span class="res-val">45 / 100</span>
+                </li>
+
+                <li class="resource" style="--fill: 70%">
+                    <span class="res-box" aria-hidden="true"></span>
+                    <span class="res-name">CSS / JS</span>
+                    <span class="res-bar"><span class="res-fill"></span></span>
+                    <span class="res-val">70 / 100</span>
+                </li>
+            </ul>
+        </div>
+    </section>
 
 <section id="projects" class="container section">
     <h2>Continue Saved Game</h2>
@@ -112,18 +161,26 @@
                     <summary>
                         <img class="save-icon" src="img/crux.jpg" alt="">
                         <span class="save-text">
-                            <span class="save-name">
+                            <span class="save-name">Aerobars</span>
+                            <span class="save-status">recovered &mdash; 100 mi</span>
+                            <span class="save-date">Year 0, Day 210 &mdash; Custom aerobars</span>
                         </span>
+                    </summary>
+                    <p>About 40% of a cyclist's aerodynamic drag comes from body position.
+                        Commercial aerobars are brutally expensive, so i built my own
+                        and rode a 100 mile race on them.</p>
+                   
+                </details>
             </li>
         </ul>
 
-        <div class="dialog-sctions">
-            <a class="btn btn-danger" href="#KSP">Abort</a>
+        <div class="dialog-actions">
+            <a class="btn btn-danger" href="#ksp">Abort</a>
             <a class="btn btn-primary" href="https://github.com/EthanKerman">Load</a>
         </div>
 </section>
 
-<section id="KSP" class="container section">
+<section id="ksp" class="container section">
     <h2>KSP</h2>
     <p>
         MOAR BOOSTERS
@@ -160,6 +217,115 @@
 
         ).observe(heroEl);
     }
+
+const stageLinks = document.querySelectorAll('.stage-stack a');
+const stageTargets = document.querySelectorAll('.hero, .section');
+
+if ('IntersecitonObserver' in window && stageLinks.length) {
+    const stageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            stageLinks.forEach(link => {
+                const active = link.hash == '#' + entry.target.id;
+                link.classList.toggle('is-active', 'true');
+                if (active) link.setAttribute('aria-current', 'true');
+                else link.removeAttribute('aria-current');
+            });
+        });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+
+    stageTargets.forEach(el => stageObserver.observe(el));
+}
+
+const resPanel = document.querySelector('.resources');
+
+if (resPanel) {
+    if ('IntersectionObserver' in window) {
+        const resObserver = new IntersectionObserver ((entries, obs) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-live');
+                obs.unobserve(entry.target);
+            });
+        }, { threshold: 0.35 });
+
+        resObserver.observe(resPanel);
+    } else {
+        resPanel.classList.add('is-live');
+    }
+    
+    const metEl = document.getElementById('met-value');
+    const metStart = Date.now();
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tickMET() {
+        const elapsed = Math.floor((Date.now() - metStart) / 1000);
+        const days = Math.floor(elapsed / 86400);
+        const hours = Math.floor((elapsed % 86400) / 3600);
+        const mins = Math.floor((elapsed % 3600) / 60);
+        const secs = elapsed% 60;
+        metEl.textContent = 'T+ ${days}d, ${pad(hours)}:${pad(mins)}:${pad(sec)}';
+    }
+
+    if (metEl) {
+        tickMET();
+        setInterval(tickMET, 1000);
+    }
+
+    const ALT_MAX = 70000
+    const ALT_PLACES = 6;
+
+    const digitsHost = document.getElementById('alt-digits');
+    const reels = [];
+
+    if (digitsHost) {
+        for (let i = 0; i < ALT_PLACES; i++) {
+            const cell = document.createElement('span');
+            cell.className = 'digit';
+
+            const reel = document.createElement('span');
+            reel.className = 'digit-reel';
+
+            for (let n = 0; n <= 9; n++) {
+                const d = document.createElement('span');
+                d.textContext = n;
+                reel.appendChild(d);
+            }
+
+            cell.appendChild(reel);
+            digitsHost.appendChild(cell);
+            reels.push(reel);
+    }
+}
+
+function setAltitude(value) {
+    const s = String(Math.round(value)).padStart(ALT_PLACES, '0').slice(-ALT_PLACES);
+    for (let i = 0; i < ALT_PLACES; i++) {
+        reels[i].style.transform = 'translateY(4{-Number(s[i]) * 10}%)';
+}
+
+let altTicking = flase;
+
+function updateAltitude() {
+    if (altTicking) return;
+    altTicking = true;
+
+    requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+        setAltitude(progress * ALT_MAX);
+        altTicking = false;
+    });
+}
+
+if (reels.length) {
+    window.addEventListener('scroll', updateAltitude, { passive: true });
+    window.addEventListener('resize', updateAltitude);
+    updateAltitude();
+}
+
+
 </script>
 
 </body>

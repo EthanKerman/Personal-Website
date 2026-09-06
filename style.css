@@ -79,6 +79,8 @@ html { scroll-behavior: smooth; }
 
     .navball-wrap, .throttle { transition: none; }
     .throttle-fill { transition: none; }
+
+    .part-menu { transition: none; }
 }
 
 img{
@@ -342,6 +344,8 @@ a:focus-visible {
 
     .navball-wrap, .throttle { display: none; }
 
+
+    .part menu { display: none; }
 }
 
 .card{ padding: 1.5rem; }
@@ -368,8 +372,53 @@ a:focus-visible {
     border-top: 1px solid var(--ksp-panel-2);
 }
 
-.save-row { background: var(--ksp-row); border-bottom: 1px solid var(--ksp-panel-2); }
+.save-row { 
+    position: relative;
+    background: var(--ksp-row); 
+    border-bottom: 1px solid var(--ksp-panel-2); }
 .save-row:nth-child(even) { background: var(--ksp-row-alt); }
+
+.part-menu-title {
+    padding: 0.25rem 0.55rem;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #1a1d1f;
+    background: linear-gradient(to bottom, #f0a020, #c47a00);
+    border-bottom: 1px solid var(--ksp-border);
+    border-radius: 2px 2px 0 0;
+}
+
+.part-stats {
+    padding: 0.35rem 0.55rem 0.45rem;
+}
+
+.part-stats > div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.6rem;
+    align-items: baseline;
+    padding: 0.08rem 0;
+}
+
+.part-stats dt {
+    font-family: var(--font-ui);
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+    color: var(--ksp-grey);
+}
+
+.part-stats dd {
+    font-family: var(--font-mono);
+    font-size: 0.73rem;
+    color: var(--ksp-title);
+    text-align: right;
+}
+
+.part-stats dd.ok { color: var(--ksp-green); }
+.part-stats dd.warn { color: var(--ksp-menu); }
+
 
 .save-row summary {
     display: flex;
@@ -687,11 +736,11 @@ a:focus-visible {
 }
 
 .navball-readout {
-    display: flex
+    display: flex;
     flex-direction: column;
     gap: 2px;
     padding: 0.25rem 0.4rem;
-    background: var(--ksp-pannel-2);
+    background: var(--ksp-panel-2);
     border: 1px solid var(--ksp-border);
     border-radius: 2px;
 }
@@ -754,5 +803,34 @@ a:focus-visible {
     font-size: 0.58rem;
     letter-spacing: 0.08em;
     color: var(--ksp-grey);
+}
+
+.part-menu {
+    position: absolute;
+    top: 0.4rem;
+    right: var(--space);
+    z-index: 4;
+    width: 15rem;
+    background: linear-gradient(to bottom, #3a3f42, #2b2f32);
+    border: 1px solid var(--ksp-border);
+    border-radius: 3px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.65);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: opacity 130ms ease, transform 130ms ease, visibility 0s linear 130ms;
+    pointer-events: none;
+}
+
+.save-row:hover .part-menu, 
+.save-row:focus-within .part-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition-delay: 0s;
+}
+
+@media (hover: none) {
+    .part-menu { display: none; }
 }
 

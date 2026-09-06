@@ -76,6 +76,9 @@ html { scroll-behavior: smooth; }
     .res-fill { transition: none; }
 
     .digit-reel { transition: none; }
+
+    .navball-wrap, .throttle { transition: none; }
+    .throttle-fill { transition: none; }
 }
 
 img{
@@ -336,6 +339,8 @@ a:focus-visible {
 
     .altimiter { display: none; }
     .met-value { font-size: 0.7rem; }
+
+    .navball-wrap, .throttle { display: none; }
 
 }
 
@@ -659,8 +664,95 @@ a:focus-visible {
     color: var(--ksp-grey);
 }
 
+.navball-wrap {
+    position: fixed;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    z-index: 9;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 260ms ease, transform 260ms ease;
+}
 
+.navball-wrap.is-visible { opacity: 1; transform: translateY(0); }
 
+.navball {
+    width: 128px;
+    height:128px;
+    filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.6));
+}
 
+.navball-readout {
+    display: flex
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.25rem 0.4rem;
+    background: var(--ksp-pannel-2);
+    border: 1px solid var(--ksp-border);
+    border-radius: 2px;
+}
 
+.nd-row { display: flex; gap: 0.4rem; align-items: baseline; }
+
+.nb-key {
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--ksp-grey);
+}
+
+.nb-val {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ksp-tittle);
+    min-width: 2.6rem;
+    text-align: right;
+}
+
+.throttle {
+    position: fixed;
+    right: 1.1rem;
+    bottom: 10.5rem;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    align-items: conter;
+    gap: 0.25rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 260ms ease;
+}
+
+.throttle.is-visible { opacity: 1; }
+
+.throttle-track {
+    position: relative;
+    width: 11px;
+    height: 74px;
+    background: var(--ksp-panel-2);
+    border: 1px solid var(--ksp-border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.throttle-fill {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(to top, #3fa300, #6ef000);
+    transition: height 180ms linear;
+}
+
+.throttle-label {
+    font-family: var(--font-ui);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    color: var(--ksp-grey);
+}
 

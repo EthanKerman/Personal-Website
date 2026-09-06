@@ -140,6 +140,23 @@
             <li class="save-row">
                 <details>
                     <summary>
+                        <img class="save-icon" src="img/hand.jpg" alt="">
+                        <span class="save-text">
+                            <span class="save-name">Servo Hand</span>
+                            <span class="save-status">Recovered</span>
+                            <span class="save-date">Year 1, day 115 &mdash; Servo and fishing wire hand</span>
+                        </span>
+                    </summary>
+                    <p>My Servo driven hand was one of my first technical projects.
+                        While it didnt come out exactly how i wanted to and is now scrapped for parts,
+                        Im glad it worked in the end. 
+                        I think next time i would make the joints organic and printed in 1 peice instead
+                        of being held together with rods.
+
+
+            <li class="save-row">
+                <details>
+                    <summary>
                         <img class="save-icon" src="img/hank.jpg" alt="">
                         <span class="save-text">
                             <span class="save-name">Hank</span>
@@ -172,6 +189,26 @@
                    
                 </details>
             </li>
+
+            <li class="save-row">
+                <details>
+                    <summary>
+                        <img class="save-icon" src="img/crux.jpg" alt="">
+                         <span class="save-text">
+                            <span class="save-name">F1 Front Wing</span>
+                            <span class="save-status">recovered &mdash; </span>
+                            <span class="save-date">Year 1, Day 26 &mdash; Aero front wing</span>
+                         </span>
+                    </summary>
+                    <p>I love F1, Escpecially the refinded and optimized engineering.
+                        One day i was watching F1 TV's TechTalk and instantly thought,
+                        "How hard could this be..."
+                        Lo and behold, we have a CFD tested front wing.
+                        Sure it was only tested twice and revised once,
+                        but i learnt CAD only a few months before this.</p>
+                    
+                </details>
+            </li>
         </ul>
 
         <div class="dialog-actions">
@@ -186,6 +223,73 @@
         MOAR BOOSTERS
     </p>
 </section>
+
+<div class="navball-wrap" aria-hidden="true">
+    <svg class="navball" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <clipPath id="ball-clip">
+                <circle cx="100" cy="100" r="82"/>
+            </clipPath>
+
+            <radialGradient id="ball-shade" cx="35%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#fff" stop-opacity="0.28"/>
+                <stop offset="60%" stop-color="#000" stop-opactiy="0"/>
+                <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+            </radialGradient>
+        </defs>
+
+        <circle cx="100" cy="100" r="88" fill="#2b2f31" stroke="#5c6468" stroke-width="2"/>
+
+        <g clip-path="url(#ball-clip)">
+            <g id="ball-sphere">
+                <rect x="-200" y="-400" width="600" height="500" fill="3a6ea8"/>
+                <rect x="-200" y="100" width="600" height="500" fill="#7a5a3a"/>
+
+                <g stroke="#dfe6ea" stroke-width="0.8" opacity="0.55">
+                    <line x1="-200" y1="27" x2="400" y2="27"/>
+                    <line x1="-200" y1="-46" x2="400" y2="-46"/>
+                    <line x1="-200" y1="173" x2="400" y2="173"/>
+                    <line x1="-200" y1="246" x2="400" y2="246"/>
+                </g>
+
+                <g id="ball-meridians" stroke="#dfe6ea" stroke-width="0.8" opacity="0.4">
+                    <line x1="20" y1="-400" x2="20" y2="600"/>
+                    <line x1="60" y1="-400" x2="60" y2="600"/>
+                    <line x1="100" y1="-400" x2="100" y2="600"/>
+                    <line x1="140" y1="-400" x2="140" y2="600"/>
+                    <line x1="180" y1="-400" x2="180" y2="600"/>
+                </g>
+
+                <line x1="-200" y1="100" x2="400" y2="100" stroke="#fff" stroke-width="2.4"/>
+
+            </g>
+
+            <circle cx="100" cy="100" r="82" fill="url(#ball-shade)"/>
+
+        </g>
+
+        <circle cx="100" cy="100" r="82" fill="none" stroke="#5c6468" stroke-width="1.5"/>
+
+        <g stroke="#f0a020" stroke-width="2.5" fill="none">
+            <line x1="72" y1="100" x2="90" y2="100"/>
+            <line x1="110" y1="100" x2="128" y2="100"/>
+            <circle cx="100" cy="100" r="5"/>
+            <line x1="100" y1="82" x2="100" y2="90"/>
+        </g>
+    </svg>
+
+    <div class="navball-readout">
+        <span class="nb-row"><span class="nb-key">PIT</span><span class="nb-val" id="nb-pitch">0.0</span></span>
+        <span class="nb-row"><span class="nb-key">HDG</span><span class="nd-val" id="nb-hdg">090</span></span>
+    </div>
+</div>
+
+<div class="throtle" aria-hidden="true">
+    <span class="throttle-track"><span class="throttle-fill" id="throttle-fill"></span></span>
+    <span class="throttle-label"THR></span>
+</div>
+
+
 
 </main>
 
@@ -325,6 +429,54 @@ if (reels.length) {
     updateAltitude();
 }
 
+const nbWrap = document.querySelector('.navball-wrap');
+const throttle = document.querySelector('.throttle');
+const sphere = document.getElementById('ball-sphere');
+const meridians = document.getElementById('ball-meridians');
+const pitchOut = document.getElementById('nb-pitch');
+const hdgOut = document.getElementById('nb-hdg');
+const thrFill = document.getElementById('throttle-fill');
+
+const PX_PER_DEG = 82 / 90;
+const MAX_PITCH = 88;
+
+function updateNavBall(progress) {
+    const pitch = progress * MAX_PITCH;
+    const hdg = (progress * 360) % 360;
+
+    sphere.setAttribute('transform', 'translate(0, ${pitch * PX_PER_DEG})');
+    meridians.setAttribute('transform', 'translate(${-(hdg % 40) * (40 / 40)}, 0)');
+
+    pitchOut.textContent = pitch.toFixed(1);
+    hdgOut.textContent = String(Math.round(hdg)).padStart(3, '0');
+    thrFill.style.height = (progress * 100).toFixed(1) + '%';
+}
+
+let ndTicking = false;
+
+function onNavballScroll() {
+    if (nbTicking) return;
+    nbTicking = true;
+
+    requestAnimationFrame(() => {
+        const max = document.documentELement.scrollHeight - window.innerHeight;
+        const progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+
+        updateNavball(progress);
+
+        const show = window.scrollY > window.innerHeight * 0.6;
+        nbWrap.classList.toggle('is-visible', show);
+        throttle.classList.toggle('is-visible', show);
+
+        nbTicking = false;
+    });
+}
+
+if (sphere) {
+    window.addEventListener('scroll', onNavballScroll, { passive: true });
+    window.addEventListener('resize', onNavballScroll);
+    onNavballScroll();
+}
 
 </script>
 
